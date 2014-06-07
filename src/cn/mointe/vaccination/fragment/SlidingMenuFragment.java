@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -74,6 +76,13 @@ public class SlidingMenuFragment extends Fragment{
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("MainScreen");
 	}
 
 	@Override

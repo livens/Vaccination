@@ -3,7 +3,6 @@ package cn.mointe.vaccination.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -11,23 +10,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import cn.mointe.vaccination.R;
 
-public class MoreActivity extends Activity{
+import com.umeng.analytics.MobclickAgent;
+
+public class MoreActivity extends Activity {
 
 	private ListView mListView;
 	private ArrayAdapter<String> mAdapter;
 	private String[] mItems;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_more);
-		
+
 		mListView = (ListView) this.findViewById(R.id.more_lv);
 		mItems = getResources().getStringArray(R.array.more_item);
-		mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mItems);
+		mAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, mItems);
 		mListView.setAdapter(mAdapter);
-		
+
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -36,20 +37,21 @@ public class MoreActivity extends Activity{
 				Intent intent = null;
 				switch (position) {
 				case 0:
-					intent = new Intent(getApplicationContext(), MoreActivity.class);
+					intent = new Intent(getApplicationContext(),
+							MoreActivity.class);
 					startActivity(intent);
 					break;
 				case 1:
-					//PublicMethod.showToast(getApplicationContext(), "关于我们");
+					// PublicMethod.showToast(getApplicationContext(), "关于我们");
 					break;
 				case 2:
-					//PublicMethod.showToast(getApplicationContext(), "用户反馈");
+					// PublicMethod.showToast(getApplicationContext(), "用户反馈");
 					break;
 				case 3:
-					//PublicMethod.showToast(getApplicationContext(), "版本更新");
+					// PublicMethod.showToast(getApplicationContext(), "版本更新");
 					break;
 				case 4:
-					//PublicMethod.showToast(getApplicationContext(), "分享");
+					// PublicMethod.showToast(getApplicationContext(), "分享");
 					break;
 				default:
 					break;
@@ -59,11 +61,16 @@ public class MoreActivity extends Activity{
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			this.finish();
-		}
-		return super.onOptionsItemSelected(item);
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("SplashScreen"); // 统计页面
+		MobclickAgent.onResume(this); // 统计时长
 	}
-	
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("SplashScreen");
+		MobclickAgent.onPause(this);
+	}
 }

@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -172,12 +174,14 @@ public class VaccineListFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		Log.i(TAG, "VaccineListFragment...onResume");
 		super.onResume();
+		MobclickAgent.onPageStart("MainScreen"); //统计页面
 	}
 
 	@Override
 	public void onPause() {
 		Log.i(TAG, "VaccineListFragment...onPause");
 		super.onPause();
+		 MobclickAgent.onPageEnd("MainScreen"); 
 	}
 
 	// 点击监听

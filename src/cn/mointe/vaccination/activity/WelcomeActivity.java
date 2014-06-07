@@ -1,5 +1,7 @@
 package cn.mointe.vaccination.activity;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +10,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 import cn.mointe.vaccination.R;
+import cn.mointe.vaccination.TencentLoginActivity;
 import cn.mointe.vaccination.tools.PackageUtil;
 
 /**
@@ -23,17 +26,19 @@ public class WelcomeActivity extends Activity {
 
 	// 版本号常量
 	private static int VERSION_CODE = 0;
-	
+
 	private boolean isExistBaby = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);// 设置无标题
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);// 设置无标题
 		Window window = getWindow();
 		window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
 		setContentView(R.layout.activity_welcome);
+
+		MobclickAgent.openActivityDurationTrack(false);
 
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -60,10 +65,10 @@ public class WelcomeActivity extends Activity {
 					// 无版本更新，跳转到主界面
 					if (isExistBaby) {
 						Intent intent = new Intent(WelcomeActivity.this,
-								MainActivity.class);
+								LoginMainActivity.class);
 						startActivity(intent);
 						WelcomeActivity.this.finish();
-					}else{
+					} else {
 						Intent intent = new Intent(WelcomeActivity.this,
 								RegisterBabyActivity.class);
 						startActivity(intent);
@@ -75,4 +80,17 @@ public class WelcomeActivity extends Activity {
 
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("SplashScreen"); // 统计页面
+		MobclickAgent.onResume(this); // 统计时长
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("SplashScreen");
+		MobclickAgent.onPause(this);
+	}
 }

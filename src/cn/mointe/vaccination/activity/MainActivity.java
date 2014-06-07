@@ -46,6 +46,7 @@ import cn.mointe.vaccination.slidingmenu.app.SlidingFragmentActivity;
 import cn.mointe.vaccination.slidingmenu.lib.SlidingMenu;
 import cn.mointe.vaccination.tools.DateUtils;
 import cn.mointe.vaccination.tools.Log;
+import cn.mointe.vaccination.tools.NetworkUtil;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.ConversationActivity;
@@ -90,6 +91,11 @@ public class MainActivity extends SlidingFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		int state = NetworkUtil.getAPNType(this);
+		if (state == -1) {
+			Toast.makeText(this, "无法连接到服务器，请检查您的网络", Toast.LENGTH_SHORT).show();
+		}
+		
 		// setSlidingActionBarEnabled(true);
 		mBabyDao = new BabyDao(this);
 		mVaccinationDao = new VaccinationDao(this);
@@ -206,6 +212,9 @@ public class MainActivity extends SlidingFragmentActivity implements
 
 		// 初始化滑动菜单
 		initSlidingMenu(savedInstanceState);
+
+//		mTencent = Tencent.createInstance("101080056",
+//				this.getApplicationContext());
 	}
 
 	/**
@@ -313,7 +322,6 @@ public class MainActivity extends SlidingFragmentActivity implements
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
-
 
 	/**
 	 * 得到ActionBar高度

@@ -142,9 +142,29 @@
         </activity>
         <activity
             android:name="cn.mointe.vaccination.activity.DiaryDeleteVaccineDialog"
-            android:theme="@style/CustomDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDialog" >
+        </activity>
+        <activity
+            android:name="cn.mointe.vaccination.activity.LoginMainActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent101080056" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="cn.mointe.vaccination.provider.VaccinationProvider"
@@ -187,6 +207,14 @@
         <service android:name="cn.mointe.vaccination.service.UpdateService" >
         </service>
 
+        <receiver android:name="cn.mointe.vaccination.receiver.NetworkStateReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="535a704d56240b177202b50c" />
@@ -211,6 +239,27 @@
             android:label="@string/contact" />
 
         <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="cn.mointe.vaccination.activity.LoginInActivity"
+            android:label="@string/title_activity_login_in" >
+        </activity>
+        <activity
+            android:name="cn.mointe.vaccination.TencentLoginActivity"
+            android:label="@string/title_activity_tencent_login" >
+        </activity>
+        <activity
+            android:name="cn.mointe.vaccination.BaseActivity"
+            android:label="@string/title_activity_base" >
+        </activity>
+        <activity
+            android:name="cn.mointe.vaccination.SinaSSOActivity"
+            android:label="@string/title_activity_sina_sso" >
+        </activity>
+        <activity
+            android:name="cn.mointe.vaccination.sinasso.WBLoginLogoutActivity"
+            android:label="@string/title_activity_wblogin_logout" >
+        </activity>
     </application>
 
 </manifest>

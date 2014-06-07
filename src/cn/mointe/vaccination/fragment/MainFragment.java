@@ -27,6 +27,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ImageButton;
@@ -36,6 +37,7 @@ import android.widget.TextView;
 import cn.mointe.vaccination.R;
 import cn.mointe.vaccination.activity.AddDiaryActivity;
 import cn.mointe.vaccination.activity.AddTwoTypeVaccineActivity;
+import cn.mointe.vaccination.activity.LoginMainActivity;
 import cn.mointe.vaccination.activity.RegisterBabyActivity;
 import cn.mointe.vaccination.activity.ReservationCalendarActivity;
 import cn.mointe.vaccination.activity.VaccinationDetailActivity;
@@ -94,6 +96,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 	//private RelativeLayout mFootMenuLayout;
 	//private boolean mFootMenuIsShowing = true;
 
+	//private Button button;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,6 +115,15 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		View view = inflater.inflate(R.layout.fragment_main, null);
 
+		//button = (Button) view.findViewById(R.id.button1);
+		//button.setOnClickListener(new OnClickListener() {
+			
+			/*@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getActivity(), LoginTestActivity.class));
+			}
+		});*/
+		
 		mParentLayout = view.findViewById(R.id.main_parent_layout);
 
 		mRemindHint = (TextView) view.findViewById(R.id.main_remind_hint);
@@ -233,6 +246,8 @@ public class MainFragment extends Fragment implements OnClickListener {
 
 		return view;
 	}
+	
+	
 
 	/**
 	 * 设置预约时间

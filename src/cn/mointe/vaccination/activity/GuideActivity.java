@@ -3,6 +3,8 @@ package cn.mointe.vaccination.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -130,7 +132,22 @@ public class GuideActivity extends Activity {
 		}
 
 	}
-
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("SplashScreen"); //统计页面
+	    MobclickAgent.onResume(this);          //统计时长
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("SplashScreen");  
+	    MobclickAgent.onPause(this);
+	}
+	
+	
 	/**
 	 * 跳转到主界面
 	 */

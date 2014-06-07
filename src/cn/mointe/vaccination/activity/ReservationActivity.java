@@ -44,6 +44,8 @@ import cn.mointe.vaccination.tools.Log;
 import cn.mointe.vaccination.tools.StringUtils;
 import cn.mointe.vaccination.view.CircleImageView;
 
+import com.umeng.analytics.MobclickAgent;
+
 public class ReservationActivity extends Activity {
 
 	private CircleImageView mBabyImage;
@@ -66,7 +68,7 @@ public class ReservationActivity extends Activity {
 
 	private ProgressDialog mProgressDialog;
 	private String mFirstAdd;
-	
+
 	private TextView mTitleText;
 	private ImageButton mTitleLeftImgbtn;// title左边图标
 	private ImageButton mTitleRightImgbtn;// title右边图
@@ -81,16 +83,16 @@ public class ReservationActivity extends Activity {
 		mVaccinationDao = new VaccinationDao(this);
 		mBabyDao = new BabyDao(this);
 		mPreferences = new VaccinationPreferences(this);
-		
+
 		mTitleText = (TextView) this.findViewById(R.id.title_text);
 		mTitleLeftImgbtn = (ImageButton) this
 				.findViewById(R.id.title_left_imgbtn);
 		mTitleRightImgbtn = (ImageButton) this
 				.findViewById(R.id.title_right_imgbtn);
-		
+
 		mTitleText.setText(R.string.next);
 		mTitleLeftImgbtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				ReservationActivity.this.finish();
@@ -188,6 +190,20 @@ public class ReservationActivity extends Activity {
 		mProgressDialog.setTitle(R.string.hint);
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("SplashScreen"); // 统计页面
+		MobclickAgent.onResume(this); // 统计时长
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("SplashScreen");
+		MobclickAgent.onPause(this);
+	}
+
 	/**
 	 * 完成处理任务
 	 */
@@ -215,7 +231,7 @@ public class ReservationActivity extends Activity {
 								mSelectVaccinations, mReservationDate.getText()
 										.toString());
 					}
-					
+
 					// 只有首次进入才会执行
 					if (!StringUtils.isNullOrEmpty(mFirstAdd)) {
 						// 将下次接种日期存入preferences
@@ -224,7 +240,8 @@ public class ReservationActivity extends Activity {
 						// 设置提醒
 						mPreferences.setNotify(true);
 						// 启动服务
-						Intent remindService = new Intent(ReservationActivity.this,
+						Intent remindService = new Intent(
+								ReservationActivity.this,
 								VaccinationRemindService.class);
 						startService(remindService);
 					}
@@ -244,9 +261,10 @@ public class ReservationActivity extends Activity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			if (!StringUtils.isNullOrEmpty(mFirstAdd)) {
-				//首次进入跳转到主界面
-				startActivity(new Intent(ReservationActivity.this, MainActivity.class));
-				mPreferences.setIsExistBaby(true);//下次启动直接进入主界面
+				// 首次进入跳转到主界面
+				startActivity(new Intent(ReservationActivity.this,
+						MainActivity.class));
+				mPreferences.setIsExistBaby(true);// 下次启动直接进入主界面
 			}
 			AddBabyAgent.getInstance().exit();
 			mProgressDialog.dismiss();

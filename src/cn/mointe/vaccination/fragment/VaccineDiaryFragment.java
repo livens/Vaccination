@@ -3,6 +3,8 @@ package cn.mointe.vaccination.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -103,11 +105,20 @@ public class VaccineDiaryFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		super.onResume();
+		MobclickAgent.onPageStart("MainScreen"); //统计页面
 		Log.i("MainActivity", "VaccineFragment OnResume");
 		mDiaryAdapter = new DiaryAdapter(getActivity(), getDiaries());
 		mDiaryListView.setAdapter(mDiaryAdapter);
 		mDiaryAdapter.notifyDataSetChanged();
 	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		Log.i("MainActivity", "VaccineFragment onPause");
+		MobclickAgent.onPageEnd("MainScreen"); 
+	}
+	
 
 	/**
 	 * 数据
@@ -185,11 +196,6 @@ public class VaccineDiaryFragment extends Fragment implements OnClickListener {
 
 	};
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		Log.i("MainActivity", "VaccineFragment onPause");
-	}
 
 	@Override
 	public void onClick(View v) {
