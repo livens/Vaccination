@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/tencentlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:contentDescription="@drawable/connect_logo_5"
+        android:src="@drawable/connect_logo_4" />
+
+    <com.sina.weibo.sdk.widget.LoginButton
+        android:id="@+id/sinalogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:contentDescription="@string/sinalogin"
+        android:paddingTop="25dp" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_com_sina_weibo_sdk_login_with_text"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>
