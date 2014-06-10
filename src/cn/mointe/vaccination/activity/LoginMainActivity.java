@@ -59,7 +59,7 @@ public class LoginMainActivity extends Activity {
 	private LoginButton mLoginBtnDefault;
 	private TextView mTokenView;
 	private Button mCurrentClickedButton;
-	
+
 	/** 登录认证对应的listener */
 	private AuthListener mLoginListener = new AuthListener();
 	/** 登出操作对应的listener */
@@ -77,17 +77,17 @@ public class LoginMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login_test);
-		
+
 		mTokenView = (TextView) findViewById(R.id.result);
 
 		// 创建授权认证信息
 		AuthInfo authInfo = new AuthInfo(this, Constants.APP_KEY,
 				Constants.REDIRECT_URL, Constants.SCOPE);
-		
+
 		/**
 		 * 登录按钮
 		 */
-		mLoginBtnDefault = (LoginButton)findViewById(R.id.sina_login_main);
+		mLoginBtnDefault = (LoginButton) findViewById(R.id.sina_login_main);
 		mLoginBtnDefault.setWeiboAuthInfo(authInfo, mLoginListener);
 
 		login = (ImageButton) this.findViewById(R.id.tencentlogin);
@@ -210,16 +210,18 @@ public class LoginMainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		mTencent.onActivityResult(requestCode, resultCode, data);
-		
+
 		if (mCurrentClickedButton != null) {
-            if (mCurrentClickedButton instanceof LoginButton) {
-                ((LoginButton)mCurrentClickedButton).onActivityResult(requestCode, resultCode, data);
-            } else if (mCurrentClickedButton instanceof LoginoutButton) {
-                ((LoginoutButton)mCurrentClickedButton).onActivityResult(requestCode, resultCode, data);
-            }
-        }
+			if (mCurrentClickedButton instanceof LoginButton) {
+				((LoginButton) mCurrentClickedButton).onActivityResult(
+						requestCode, resultCode, data);
+			} else if (mCurrentClickedButton instanceof LoginoutButton) {
+				((LoginoutButton) mCurrentClickedButton).onActivityResult(
+						requestCode, resultCode, data);
+			}
+		}
 	}
-	
+
 	/**
 	 * 
 	 * @author Livens 登入按钮的监听器，接收授权结果
@@ -288,6 +290,7 @@ public class LoginMainActivity extends Activity {
 
 	}
 
+	@SuppressWarnings("unused")
 	private class BaseUiListener implements IUiListener {
 
 		@Override
@@ -296,6 +299,10 @@ public class LoginMainActivity extends Activity {
 			Util.showResultDialog(LoginMainActivity.this, response.toString(),
 					"登录成功");
 			doComplete((JSONObject) response);
+
+			Intent intent = new Intent(LoginMainActivity.this,
+					MainActivity.class);
+			startActivity(intent);
 		}
 
 		protected void doComplete(JSONObject values) {
@@ -338,6 +345,10 @@ public class LoginMainActivity extends Activity {
 							Toast.LENGTH_SHORT).show();
 					// loginInfo.setText(arg0.toString());
 					// Log.i("MainActivity", "登录信息:" + arg0.toString());
+
+					Intent intent = new Intent(LoginMainActivity.this,
+							MainActivity.class);
+					startActivity(intent);
 
 				}
 
